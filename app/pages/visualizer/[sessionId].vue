@@ -17,7 +17,7 @@ onMounted(() => {
       try {
         const parsed = JSON.parse(saved)
         Object.assign(visualizerStore, { session: parsed })
-      } catch {}
+      } catch { }
     }
   }
 })
@@ -39,10 +39,7 @@ const showSidebar = ref(false)
           <span class="text-xs text-text-tertiary hidden sm:block font-mono">{{ sessionId.slice(0, 8) }}…</span>
         </div>
         <VisualizerToolbar />
-        <button
-          class="lg:hidden btn-soft flex items-center gap-1.5 text-sm"
-          @click="showSidebar = !showSidebar"
-        >
+        <button class="lg:hidden btn-soft flex items-center gap-1.5 text-sm" @click="showSidebar = !showSidebar">
           <Icon name="lucide:panel-right" class="w-4 h-4" />
           Panel
         </button>

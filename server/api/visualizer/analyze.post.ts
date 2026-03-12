@@ -42,7 +42,10 @@ export default defineEventHandler(async (event) => {
   // Extract base64 payload from data URL
   const commaIdx = body.imageDataUrl.indexOf(",");
   if (commaIdx === -1) {
-    throw createError({ statusCode: 400, statusMessage: "Invalid imageDataUrl" });
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Invalid imageDataUrl",
+    });
   }
   const mimeType = body.imageDataUrl
     .slice(0, commaIdx)

@@ -23,7 +23,8 @@ const footerLinks = {
             <span class="font-bold text-lg">Visualiza</span>
           </NuxtLink>
           <p class="text-text-secondary text-sm max-w-xs">
-            Visualiza tu hogar ideal con productos reales de suplidores dominicanos. Transforma cualquier espacio antes de comprar.
+            Visualiza tu hogar ideal con productos reales de suplidores dominicanos. Transforma cualquier espacio antes
+            de comprar.
           </p>
         </div>
 

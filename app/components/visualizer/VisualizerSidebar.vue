@@ -69,7 +69,7 @@ const { formatPrice } = useFormatPrice()
               <Icon name="lucide:clipboard-list" class="w-4 h-4" />
               <span v-if="bom.length"
                 class="absolute -top-1.5 -right-1.5 min-w-[14px] h-3.5 flex items-center justify-center bg-primary text-white text-[9px] font-bold rounded-full px-0.5">{{
-                bom.length }}</span>
+                  bom.length }}</span>
             </div>
           </button>
           <button v-if="activeTab !== 'products'"

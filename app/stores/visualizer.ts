@@ -19,10 +19,7 @@ const SURFACE_LABELS: Record<string, string> = {
   backsplash: "Salpicadero",
 };
 
-function computeAreaM2(
-  surfaceType: string,
-  dims: RoomDimensions,
-): number {
+function computeAreaM2(surfaceType: string, dims: RoomDimensions): number {
   const { width, length, height } = dims;
   switch (surfaceType) {
     case "floor":
@@ -53,7 +50,8 @@ function calcQuantity(
     };
   }
   if (unit === "galón" || unit === "galon" || unit === "gallon") {
-    const spec: string = (product.specs as Record<string, string>)?.Rendimiento ?? "";
+    const spec: string =
+      (product.specs as Record<string, string>)?.Rendimiento ?? "";
     const match = spec.match(/(\d+)\s*m²?\s*\/\s*gal/i);
     const coverage = match ? parseInt(match[1]) : 10;
     return {
@@ -75,7 +73,11 @@ export const useVisualizerStore = defineStore("visualizer", () => {
   const isGenerating = ref(false);
 
   // BoM state
-  const roomDimensions = ref<RoomDimensions>({ width: 4, length: 5, height: 2.6 });
+  const roomDimensions = ref<RoomDimensions>({
+    width: 4,
+    length: 5,
+    height: 2.6,
+  });
   const wasteFactor = ref(0.05); // 5 %
   const aiAnalysis = ref<AIDesignAnalysis | null>(null);
   const isAnalyzing = ref(false);
@@ -89,9 +91,8 @@ export const useVisualizerStore = defineStore("visualizer", () => {
       );
       const surfaceType = surface?.type ?? "floor";
       const areaM2 =
-        Math.round(
-          computeAreaM2(surfaceType, roomDimensions.value) * 100,
-        ) / 100;
+        Math.round(computeAreaM2(surfaceType, roomDimensions.value) * 100) /
+        100;
       const { coveragePerUnit, quantity } = calcQuantity(
         layer.product,
         areaM2,
@@ -273,7 +274,12 @@ export const useVisualizerStore = defineStore("visualizer", () => {
         "/api/visualizer/generate",
         {
           method: "POST",
-          body: { roomType: session.value.roomType, products, style, base64Image },
+          body: {
+            roomType: session.value.roomType,
+            products,
+            style,
+            base64Image,
+          },
         },
       );
       generatedImage.value = result.imageDataUrl;
@@ -297,18 +303,15 @@ export const useVisualizerStore = defineStore("visualizer", () => {
           surfaceType: surface?.type ?? "floor",
         };
       });
-      const result = await $fetch<AIDesignAnalysis>(
-        "/api/visualizer/analyze",
-        {
-          method: "POST",
-          body: {
-            imageDataUrl: generatedImage.value,
-            products,
-            roomType: session.value.roomType,
-            totalEstimatedCost: bomTotalDOP.value,
-          },
+      const result = await $fetch<AIDesignAnalysis>("/api/visualizer/analyze", {
+        method: "POST",
+        body: {
+          imageDataUrl: generatedImage.value,
+          products,
+          roomType: session.value.roomType,
+          totalEstimatedCost: bomTotalDOP.value,
         },
-      );
+      });
       aiAnalysis.value = result;
     } finally {
       isAnalyzing.value = false;

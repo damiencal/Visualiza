@@ -19,19 +19,12 @@ function visualize() {
 </script>
 
 <template>
-  <SharedBottomSheet
-    :model-value="modelValue"
-    :title="product?.nameEs || product?.name || ''"
-    @update:model-value="emit('update:modelValue', $event)"
-  >
+  <SharedBottomSheet :model-value="modelValue" :title="product?.nameEs || product?.name || ''"
+    @update:model-value="emit('update:modelValue', $event)">
     <div v-if="product" class="p-5 space-y-5">
       <!-- Image -->
       <div class="aspect-square rounded-2xl overflow-hidden bg-surface-100">
-        <img
-          :src="product.images.main"
-          :alt="product.nameEs || product.name"
-          class="w-full h-full object-cover"
-        />
+        <img :src="product.images.main" :alt="product.nameEs || product.name" class="w-full h-full object-cover" />
       </div>
 
       <!-- Info -->
@@ -61,20 +54,13 @@ function visualize() {
 
     <template #footer>
       <div class="flex gap-3">
-        <button
-          v-if="product?.visualizerCompatible"
-          class="btn-primary flex-1 flex items-center justify-center gap-2"
-          @click="visualize"
-        >
+        <button v-if="product?.visualizerCompatible" class="btn-primary flex-1 flex items-center justify-center gap-2"
+          @click="visualize">
           <Icon name="lucide:wand-2" class="w-4 h-4" />
           Visualizar
         </button>
-        <NuxtLink
-          v-if="product"
-          :to="`/catalog/${product.slug}`"
-          class="btn-soft flex-1 text-center"
-          @click="emit('update:modelValue', false)"
-        >
+        <NuxtLink v-if="product" :to="`/catalog/${product.slug}`" class="btn-soft flex-1 text-center"
+          @click="emit('update:modelValue', false)">
           Ver detalles
         </NuxtLink>
       </div>
