@@ -7,8 +7,6 @@ const {
     roomDimensions,
     wasteFactor,
     generatedImage,
-    aiAnalysis,
-    isAnalyzing,
     session,
 } = storeToRefs(visualizerStore)
 
@@ -40,32 +38,6 @@ watch(
 )
 
 const showDims = ref(false)
-
-async function runAnalysis() {
-    await visualizerStore.analyzeWithAI()
-}
-
-const scoreColor = computed(() => {
-    const s = aiAnalysis.value?.score ?? 0
-    if (s >= 8) return 'text-emerald-600'
-    if (s >= 5) return 'text-amber-500'
-    return 'text-red-500'
-})
-
-const scoreBg = computed(() => {
-    const s = aiAnalysis.value?.score ?? 0
-    if (s >= 8) return 'bg-emerald-50 border-emerald-200'
-    if (s >= 5) return 'bg-amber-50 border-amber-200'
-    return 'bg-red-50 border-red-200'
-})
-
-const scoreBarWidth = computed(() => `${((aiAnalysis.value?.score ?? 0) / 10) * 100}%`)
-const scoreBarColor = computed(() => {
-    const s = aiAnalysis.value?.score ?? 0
-    if (s >= 8) return 'bg-emerald-500'
-    if (s >= 5) return 'bg-amber-400'
-    return 'bg-red-500'
-})
 
 // Group BoM by currency for display
 const bomDOP = computed(() => bom.value.filter((i) => i.currency === 'DOP'))

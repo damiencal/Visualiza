@@ -11,8 +11,7 @@ async function exportAndDownload() {
 async function handleGenerate() {
   try {
     await visualizerStore.generateWithAI()
-    // Auto-switch sidebar to AI analysis after generation
-    uiStore.visualizerSidebarTab = 'analysis'
+    uiStore.visualizerSidebarTab = 'products'
   }
   catch (e: unknown) {
     const msg = e instanceof Error ? e.message : 'Error al generar imagen'

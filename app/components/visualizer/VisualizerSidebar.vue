@@ -141,9 +141,5 @@ const { formatPrice } = useFormatPrice()
       <VisualizerBillOfMaterials class="h-full" />
     </div>
 
-    <!-- AI Analysis tab -->
-    <div v-else-if="activeTab === 'analysis'" class="flex-1 overflow-hidden">
-      <VisualizerAIDesignAnalysis class="h-full" />
-    </div>
   </div>
 </template>
