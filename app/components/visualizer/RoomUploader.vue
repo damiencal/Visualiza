@@ -49,7 +49,8 @@ function useSampleRoom() {
       isDragging ? 'border-primary/60 bg-primary/5 scale-[1.01]' : 'border-primary/30 hover:border-primary/60',
     ]" @dragover.prevent="isDragging = true" @dragleave.prevent="isDragging = false" @drop.prevent="onDrop">
       <input ref="fileInput" type="file" accept="image/jpeg,image/png,image/webp"
-        class="absolute inset-0 w-full h-full opacity-0 z-10" :class="isProcessing ? 'cursor-not-allowed' : 'cursor-pointer'" aria-label="Subir foto de habitación"
+        class="absolute inset-0 w-full h-full opacity-0 z-10"
+        :class="isProcessing ? 'cursor-not-allowed' : 'cursor-pointer'" aria-label="Subir foto de habitación"
         @change="onFileChange" :disabled="isProcessing" />
       <div
         class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-inner-soft">
