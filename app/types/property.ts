@@ -1,0 +1,10 @@
+export type RoomType =
+  | 'living-room'
+  | 'bedroom'
+  | 'kitchen'
+  | 'bathroom'
+  | 'dining-room'
+  | 'office'
+  | 'balcony'
+  | 'exterior'
+  | 'other'

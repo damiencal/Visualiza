@@ -1,0 +1,20 @@
+# Separate Next.js app — not part of Vercel deployment root
+
+visualizard/
+
+# Nuxt build cache and dev artifacts
+
+.nuxt/
+.output/
+.nitro/
+.cache/
+dist/
+
+# Local env
+
+.env
+.env.local
+
+# Dev container config
+
+.devcontainer/
