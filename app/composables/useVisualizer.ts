@@ -93,7 +93,7 @@ export const useVisualizer = () => {
     return canvas.value?.toDataURL('image/png') ?? null
   }
 
-  async function downloadImage(filename = 'visualiza-result.png') {
+  async function downloadImage(filename = 'visualisa-result.png') {
     const dataUrl = exportImage()
     if (!dataUrl) return
     const link = document.createElement('a')

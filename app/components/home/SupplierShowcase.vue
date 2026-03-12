@@ -19,7 +19,7 @@ const suppliers = [
         <p class="text-xs text-primary font-semibold uppercase tracking-wider mb-2">Suplidores</p>
         <h2 class="text-2xl sm:text-3xl font-bold text-text-primary">Productos reales de marcas dominicanas</h2>
         <p class="text-text-secondary mt-3 max-w-xl mx-auto text-sm">
-          Todos los productos del visualizador están disponibles en suplidores locales de la República Dominicana.
+          Todos los productos del visualisador están disponibles en suplidores locales de la República Dominicana.
         </p>
       </div>
 

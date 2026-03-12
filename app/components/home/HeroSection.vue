@@ -15,7 +15,7 @@
       <div
         class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
         <Icon name="lucide:sparkles" class="w-4 h-4" />
-        Visualizador de interiores para RD
+        Visualisador de interiores para RD
       </div>
 
       <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-text-primary leading-tight tracking-tight mb-6">
@@ -24,7 +24,7 @@
       </h1>
 
       <p class="text-lg sm:text-xl text-text-secondary max-w-2xl mx-auto mb-10 leading-relaxed">
-        Visualiza cómo lucirán los productos reales de IKEA, Cerámica del Caribe, Pinturas Popular y más en cualquier
+        Visualisa cómo lucirán los productos reales de IKEA, Cerámica del Caribe, Pinturas Popular y más en cualquier
         espacio.
       </p>
 
@@ -32,7 +32,7 @@
       <div class="flex flex-wrap items-center justify-center gap-3">
         <NuxtLink to="/visualizer" class="btn-primary flex items-center gap-2">
           <Icon name="lucide:sparkles" class="w-4 h-4" />
-          Abrir visualizador
+          Abrir visualisador
         </NuxtLink>
         <NuxtLink to="/catalog" class="btn-soft flex items-center gap-2">
           <Icon name="lucide:grid-2x2" class="w-4 h-4" />

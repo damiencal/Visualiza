@@ -1,6 +1,6 @@
-# Visualiza
+# Visualisa
 
-Visualiza is an AI-powered renovation visualizer for real estate professionals that enables users to select furnitures, materials and surfaces, instantly generate renovation previews, and produce accurate bills of materials.
+Visualisa is an AI-powered renovation visualizer for real estate professionals that enables users to select furnitures, materials and surfaces, instantly generate renovation previews, and produce accurate bills of materials.
 
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 

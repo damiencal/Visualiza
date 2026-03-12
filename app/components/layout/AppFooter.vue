@@ -4,7 +4,7 @@ const footerLinks = {
     { to: '/about', label: 'Sobre Nosotros' },
   ],
   services: [
-    { to: '/visualizer', label: 'Visualizador' },
+    { to: '/visualizer', label: 'Visualisador' },
     { to: '/catalog', label: 'Catálogo' },
   ],
 }
@@ -20,10 +20,10 @@ const footerLinks = {
             <div class="w-8 h-8 bg-primary rounded-xl flex items-center justify-center">
               <Icon name="lucide:home" class="w-4 h-4 text-white" aria-hidden="true" />
             </div>
-            <span class="font-bold text-lg">Visualiza</span>
+            <span class="font-bold text-lg">Visualisa</span>
           </NuxtLink>
           <p class="text-text-secondary text-sm max-w-xs">
-            Visualiza tu hogar ideal con productos reales de suplidores dominicanos. Transforma cualquier espacio antes
+            Visualisa tu hogar ideal con productos reales de suplidores dominicanos. Transforma cualquier espacio antes
             de comprar.
           </p>
         </div>
@@ -54,7 +54,7 @@ const footerLinks = {
 
       <div class="mt-10 pt-6 border-t border-black/[0.05] flex flex-col sm:flex-row items-center justify-between gap-4">
         <p class="text-xs text-text-tertiary">
-          © {{ new Date().getFullYear() }} Visualiza. Todos los derechos reservados.
+          © {{ new Date().getFullYear() }} Visualisa. Todos los derechos reservados.
         </p>
         <p class="text-xs text-text-tertiary">
           Hecho con ❤️ en República Dominicana

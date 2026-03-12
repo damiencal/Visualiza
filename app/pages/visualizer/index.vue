@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'visualizer' })
-useSeoMeta({ title: 'Visualizador de Interiores - Visualiza', description: 'Visualiza cómo lucirán los productos en tu hogar.' })
+useSeoMeta({ title: 'Visualisador de Interiores - Visualisa', description: 'Visualisa cómo lucirán los productos en tu hogar.' })
 
 const visualizerStore = useVisualizerStore()
 const { session } = storeToRefs(visualizerStore)

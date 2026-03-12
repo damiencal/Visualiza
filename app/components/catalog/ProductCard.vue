@@ -36,7 +36,7 @@ const categoryLabels: Record<string, string> = {
       <!-- Visualizer badge -->
       <div v-if="product.visualizerCompatible"
         class="absolute top-2 right-2 w-7 h-7 bg-primary rounded-full flex items-center justify-center shadow-glow"
-        title="Compatible con visualizador">
+        title="Compatible con visualisador">
         <Icon name="lucide:wand-2" class="w-3.5 h-3.5 text-white" />
       </div>
     </div>

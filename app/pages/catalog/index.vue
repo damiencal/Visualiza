@@ -1,5 +1,5 @@
 <script setup lang="ts">
-useSeoMeta({ title: 'Catálogo de Productos - Visualiza' })
+useSeoMeta({ title: 'Catálogo de Productos - Visualisa' })
 </script>
 
 <template>

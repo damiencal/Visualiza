@@ -30,18 +30,18 @@ export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
   app: {
     head: {
-      title: "Visualiza — Visualizador Inmobiliario Interactivo",
+      title: "Visualisa — Visualisador Inmobiliario Interactivo",
       meta: [
         {
           name: "description",
           content:
-            "Visualiza tu hogar ideal con productos reales de suplidores dominicanos.",
+            "Visualisa tu hogar ideal con productos reales de suplidores dominicanos.",
         },
         { name: "theme-color", content: "#F43F5E" },
         { name: "apple-mobile-web-app-capable", content: "yes" },
         { name: "apple-mobile-web-app-status-bar-style", content: "default" },
-        { name: "apple-mobile-web-app-title", content: "Visualiza" },
-        { name: "application-name", content: "Visualiza" },
+        { name: "apple-mobile-web-app-title", content: "Visualisa" },
+        { name: "application-name", content: "Visualisa" },
         { name: "msapplication-TileColor", content: "#F43F5E" },
         { name: "msapplication-config", content: "/browserconfig.xml" },
         {

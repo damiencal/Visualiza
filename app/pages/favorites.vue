@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Product } from '~/types'
 
-useSeoMeta({ title: 'Mis Favoritos - Visualiza' })
+useSeoMeta({ title: 'Mis Favoritos - Visualisa' })
 
 const { favoriteProductIds } = useFavorites()
 

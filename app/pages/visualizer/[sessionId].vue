@@ -23,7 +23,7 @@ onMounted(() => {
 })
 
 useSeoMeta({
-  title: computed(() => `Sesión de Visualizador - Visualiza`),
+  title: computed(() => `Sesión de Visualisador - Visualisa`),
 })
 
 const showSidebar = ref(false)
@@ -35,7 +35,7 @@ const showSidebar = ref(false)
     <div class="flex-1 flex flex-col min-w-0 p-4 gap-4">
       <div class="glass-card px-4 py-2.5 flex items-center justify-between gap-4">
         <div class="flex items-center gap-2 min-w-0">
-          <h1 class="font-bold text-text-primary hidden sm:block truncate">Visualizador</h1>
+          <h1 class="font-bold text-text-primary hidden sm:block truncate">Visualisador</h1>
           <span class="text-xs text-text-tertiary hidden sm:block font-mono">{{ sessionId.slice(0, 8) }}…</span>
         </div>
         <VisualizerToolbar />

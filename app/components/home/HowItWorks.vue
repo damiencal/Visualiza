@@ -9,7 +9,7 @@ const steps = [
   {
     number: '02',
     icon: 'lucide:wand-2',
-    title: 'Visualiza productos',
+    title: 'Visualisa productos',
     description: 'Aplica pisos, pinturas y más de suplidores dominicanos en tiempo real.',
   },
   {

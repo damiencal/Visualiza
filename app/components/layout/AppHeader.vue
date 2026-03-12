@@ -6,7 +6,7 @@ const isScrolled = computed(() => scrollY.value > 20)
 
 const navLinks = [
   { to: '/', label: 'Inicio' },
-  { to: '/visualizer', label: 'Visualizador' },
+  { to: '/visualizer', label: 'Visualisador' },
   { to: '/catalog', label: 'Catálogo' },
 ]
 </script>
@@ -24,7 +24,7 @@ const navLinks = [
           class="w-8 h-8 bg-primary rounded-xl flex items-center justify-center shadow-glow/50 group-hover:scale-105 transition-transform">
           <Icon name="lucide:home" class="w-4 h-4 text-white" aria-hidden="true" />
         </div>
-        <span class="font-bold text-lg tracking-tight text-text-primary">Visualiza</span>
+        <span class="font-bold text-lg tracking-tight text-text-primary">Visualisa</span>
       </NuxtLink>
 
       <!-- Desktop Nav -->

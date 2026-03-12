@@ -12,7 +12,7 @@ const { data: product, error } = await useAsyncData(
 if (error.value) throw createError({ statusCode: 404, statusMessage: 'Producto no encontrado' })
 
 useSeoMeta({
-  title: computed(() => `${product.value?.nameEs ?? product.value?.name ?? 'Producto'} - Visualiza`),
+  title: computed(() => `${product.value?.nameEs ?? product.value?.name ?? 'Producto'} - Visualisa`),
   ogImage: computed(() => product.value?.images?.main ?? ''),
 })
 

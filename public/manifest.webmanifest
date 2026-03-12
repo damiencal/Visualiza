@@ -1,6 +1,6 @@
 {
-  "name": "Visualiza",
-  "short_name": "Visualiza",
+  "name": "Visualisa",
+  "short_name": "Visualisa",
   "description": "Visualizador Inmobiliario Interactivo — Visualiza tu hogar ideal con productos reales de suplidores dominicanos.",
   "start_url": "/",
   "scope": "/",
@@ -63,14 +63,14 @@
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Vista de escritorio — Visualiza"
+      "label": "Vista de escritorio — Visualisa"
     },
     {
       "src": "/screenshots/mobile.png",
       "sizes": "390x844",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Vista móvil — Visualiza"
+      "label": "Vista móvil — Visualisa"
     }
   ]
 }

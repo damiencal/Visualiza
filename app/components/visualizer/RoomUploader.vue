@@ -39,7 +39,7 @@ function useSampleRoom() {
   <div class="max-w-4xl mx-auto px-4 py-20 min-h-full flex flex-col items-center justify-center">
     <!-- Header -->
     <div class="text-center mb-10">
-      <h1 class="text-4xl font-bold text-text-primary mb-4">Visualizador Interactivo</h1>
+      <h1 class="text-4xl font-bold text-text-primary mb-4">Visualisador Interactivo</h1>
       <p class="text-lg text-text-secondary">Sube una foto de tu espacio para comenzar a visualizar productos.</p>
     </div>
 
@@ -63,7 +63,7 @@ function useSampleRoom() {
       </template>
       <template v-else>
         <h3 class="text-2xl font-bold text-text-primary mb-2">Procesando imagen...</h3>
-        <p class="text-text-secondary">Por favor espera, estamos preparando el visualizador.</p>
+        <p class="text-text-secondary">Por favor espera, estamos preparando el visualisador.</p>
       </template>
     </div>
 

@@ -13,7 +13,7 @@ const testimonials = [
     name: 'Carlos Méndez',
     role: 'Inversionista, Punta Cana',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop',
-    quote: 'Como inversor, necesito visualizar rápidamente distintos acabados para mis propiedades. Visualiza me permite mostrar opciones reales a mis clientes en minutos.',
+    quote: 'Como inversor, necesito visualizar rápidamente distintos acabados para mis propiedades. Visualisa me permite mostrar opciones reales a mis clientes en minutos.',
     rating: 5,
   },
   {
@@ -21,7 +21,7 @@ const testimonials = [
     name: 'Ana Peña',
     role: 'Decoradora de interiores',
     avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop',
-    quote: 'Los productos de Cerámica del Caribe y Pinturas Popular integrados directamente en el visualizador son un game changer. Mis clientes quedan fascinados.',
+    quote: 'Los productos de Cerámica del Caribe y Pinturas Popular integrados directamente en el visualisador son un game changer. Mis clientes quedan fascinados.',
     rating: 5,
   },
 ]

@@ -7,7 +7,7 @@
         <div class="w-7 h-7 bg-primary rounded-xl flex items-center justify-center">
           <Icon name="lucide:home" class="w-3.5 h-3.5 text-white" />
         </div>
-        <span class="font-bold text-sm hidden sm:block">Visualiza</span>
+        <span class="font-bold text-sm hidden sm:block">Visualisa</span>
       </NuxtLink>
 
       <NuxtLink to="/" class="text-sm text-text-secondary hover:text-text-primary transition-colors">

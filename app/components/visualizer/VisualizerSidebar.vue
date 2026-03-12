@@ -10,7 +10,7 @@ const { data: products } = await useAsyncData('viz-products', () =>
   $fetch<Product[]>('/api/products'),
 )
 
-// Category tabs matching visualizard
+// Category tabs matching visualisard
 const categories = [
   { id: 'flooring', label: 'Pisos' },
   { id: 'paint', label: 'Pintura' },
