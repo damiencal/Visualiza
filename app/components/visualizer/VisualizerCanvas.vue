@@ -6,7 +6,25 @@ const emit = defineEmits<{ 'image-loaded': [] }>()
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const containerRef = ref<HTMLDivElement | null>(null)
 
-const { session, isProcessing, showBeforeAfter, sliderPosition, generatedImage, isGenerating, canUndo, canRedo } = storeToRefs(visualizerStore)
+const { session, isProcessing, showBeforeAfter, sliderPosition, generatedImage, isGenerating, canUndo, canRedo, selectedInteriorStyle } = storeToRefs(visualizerStore)
+
+// Style picker
+const showStylePicker = ref(false)
+
+const STYLE_LABELS: Record<string, string> = {
+  'modern': 'Moderno',
+  'minimalist': 'Minimalista',
+  'scandinavian': 'Escandinavo',
+  'industrial': 'Industrial',
+  'mid-century': 'Mid-Century',
+  'bohemian': 'Bohemio',
+  'traditional': 'Clásico',
+  'farmhouse': 'Rústico',
+  'coastal': 'Costero',
+  'art-deco': 'Art Déco',
+  'japandi': 'Japandi',
+  'mediterranean': 'Mediterráneo',
+}
 
 // Drawing mode state
 const isDrawingMode = ref(false)
@@ -369,6 +387,16 @@ defineExpose({ canvasRef })
         <Icon name="lucide:pen-tool" class="w-5 h-5" />
       </button>
 
+      <!-- Interior style picker -->
+      <button :class="[
+        'p-2 transition-colors rounded-full',
+        selectedInteriorStyle
+          ? 'bg-primary/10 text-primary'
+          : 'text-text-secondary hover:text-primary',
+      ]" title="Estilo de interior" @click="showStylePicker = true">
+        <Icon name="lucide:paintbrush" class="w-5 h-5" />
+      </button>
+
       <!-- Clear mask -->
       <button v-if="maskPath.length > 0" class="p-2 text-text-secondary hover:text-primary transition-colors"
         title="Borrar Área" @click="clearMask">
@@ -427,7 +455,12 @@ defineExpose({ canvasRef })
         <Icon :name="isGenerating ? 'lucide:loader-2' : 'lucide:sparkles'"
           :class="['w-5 h-5', isGenerating && 'animate-spin']" />
       </button>
+
     </div>
+
+    <!-- Interior Style Picker popup -->
+    <VisualizerInteriorStylePicker v-model="showStylePicker" :selected-style="selectedInteriorStyle"
+      @select="(style) => { visualizerStore.setInteriorStyle(style); if (!style) visualizerStore.clearGeneratedImage() }" />
   </div>
 </template>
 

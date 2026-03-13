@@ -78,6 +78,13 @@ export const useVisualizerStore = defineStore("visualizer", () => {
     currentCanvasDataUrl.value = dataUrl;
   }
 
+  // Interior design style for AI generation
+  const selectedInteriorStyle = ref<string | null>(null);
+
+  function setInteriorStyle(style: string | null) {
+    selectedInteriorStyle.value = style;
+  }
+
   // BoM state
   const roomDimensions = ref<RoomDimensions>({
     width: 4,
@@ -270,9 +277,10 @@ export const useVisualizerStore = defineStore("visualizer", () => {
     pushSnapshot();
   }
 
-  async function generateWithAI(style?: string, base64Image?: string) {
+  async function generateWithAI(styleOverride?: string, base64Image?: string) {
     if (!session.value) return;
     isGenerating.value = true;
+    const style = styleOverride ?? selectedInteriorStyle.value ?? undefined;
     try {
       const products = session.value.layers.map((l) => ({
         name: l.product.nameEs || l.product.name,
@@ -367,6 +375,8 @@ export const useVisualizerStore = defineStore("visualizer", () => {
     isAnalyzing,
     currentCanvasDataUrl,
     setCurrentCanvas,
+    selectedInteriorStyle,
+    setInteriorStyle,
     createSession,
     selectSurface,
     addSurface,
