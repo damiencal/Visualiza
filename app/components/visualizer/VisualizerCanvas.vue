@@ -208,7 +208,7 @@ defineExpose({ canvasRef })
           <div
             class="absolute bottom-3 left-3 flex items-center gap-1.5 bg-black/60 text-white text-xs font-medium px-2.5 py-1 rounded-full backdrop-blur-sm">
             <Icon name="lucide:sparkles" class="w-3.5 h-3.5 text-violet-300" />
-            Generado con Imagen AI
+            Generado con Visualisa.com.do
           </div>
         </div>
       </Transition>
