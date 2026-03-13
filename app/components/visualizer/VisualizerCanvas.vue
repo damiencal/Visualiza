@@ -37,20 +37,59 @@ async function drawCanvas() {
 
   // Draw each layer
   for (const layer of session.value.layers) {
-    if (!layer.product?.images?.texture) continue
-    const texImg = new Image()
-    texImg.crossOrigin = 'anonymous'
-    texImg.src = layer.product.images.texture
-    await new Promise<void>(resolve => { texImg.onload = () => resolve() })
-    const pattern = ctx.createPattern(texImg, 'repeat')
-    if (!pattern) continue
-    ctx.save()
-    ctx.globalAlpha = layer.opacity ?? 0.85
-    ctx.globalCompositeOperation = (layer.blendMode ?? 'multiply') as GlobalCompositeOperation
-    ctx.fillStyle = pattern
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
-    ctx.restore()
+    if (!layer.product) continue
+
+    const isFurniture = layer.product.category === 'furniture'
+
+    if (isFurniture) {
+      // Furniture: draw the product image centered in the lower portion of the canvas
+      // as a semi-transparent rough placement for the AI to refine
+      const furnitureUrl = layer.product.images.full || layer.product.images.thumbnail
+      if (!furnitureUrl) continue
+      const furnitureImg = new Image()
+      furnitureImg.crossOrigin = 'anonymous'
+      furnitureImg.src = furnitureUrl
+      await new Promise<void>((resolve) => {
+        furnitureImg.onload = () => resolve()
+        furnitureImg.onerror = () => resolve()
+      })
+      if (furnitureImg.naturalWidth === 0) continue
+
+      // Scale to fill ~70% of canvas width, positioned in lower-center
+      const maxW = canvas.width * 0.70
+      const maxH = canvas.height * 0.55
+      const scale = Math.min(maxW / furnitureImg.naturalWidth, maxH / furnitureImg.naturalHeight)
+      const dw = furnitureImg.naturalWidth * scale
+      const dh = furnitureImg.naturalHeight * scale
+      const dx = (canvas.width - dw) / 2
+      const dy = canvas.height - dh - canvas.height * 0.04
+
+      ctx.save()
+      ctx.globalAlpha = layer.opacity ?? 0.92
+      ctx.globalCompositeOperation = 'source-over'
+      ctx.drawImage(furnitureImg, dx, dy, dw, dh)
+      ctx.restore()
+    } else {
+      // Surface materials (flooring, paint, tile, wallpaper): tile texture with blend
+      if (!layer.product.images?.texture) continue
+      const texImg = new Image()
+      texImg.crossOrigin = 'anonymous'
+      texImg.src = layer.product.images.texture
+      await new Promise<void>(resolve => { texImg.onload = () => resolve() })
+      const pattern = ctx.createPattern(texImg, 'repeat')
+      if (!pattern) continue
+      ctx.save()
+      ctx.globalAlpha = layer.opacity ?? 0.85
+      ctx.globalCompositeOperation = (layer.blendMode ?? 'multiply') as GlobalCompositeOperation
+      ctx.fillStyle = pattern
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+      ctx.restore()
+    }
   }
+
+  // Save current canvas state to the store so AI generation always has the latest snapshot
+  visualizerStore.setCurrentCanvas(canvas.toDataURL('image/jpeg', 0.85))
+
   emit('image-loaded')
 }
 
@@ -145,10 +184,80 @@ watch(() => session.value?.roomImage, () => {
   if (session.value?.roomImage) drawBeforeCanvas()
 })
 
+// Watermark drawn onto canvas context
+function drawWatermark(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) {
+  const text = 'Visualisa.com.do'
+  const fontSize = Math.max(13, Math.round(canvas.width * 0.018))
+  const paddingX = 14
+  const paddingY = 8
+  const margin = 16
+
+  ctx.save()
+  ctx.font = `600 ${fontSize}px Inter, system-ui, sans-serif`
+  const textW = ctx.measureText(text).width
+  const boxW = textW + paddingX * 2
+  const boxH = fontSize + paddingY * 2
+  const bx = margin
+  const by = canvas.height - boxH - margin
+  const r = boxH / 2
+
+  // Pill background
+  ctx.beginPath()
+  ctx.moveTo(bx + r, by)
+  ctx.lineTo(bx + boxW - r, by)
+  ctx.arcTo(bx + boxW, by, bx + boxW, by + r, r)
+  ctx.lineTo(bx + boxW, by + boxH - r)
+  ctx.arcTo(bx + boxW, by + boxH, bx + boxW - r, by + boxH, r)
+  ctx.lineTo(bx + r, by + boxH)
+  ctx.arcTo(bx, by + boxH, bx, by + boxH - r, r)
+  ctx.lineTo(bx, by + r)
+  ctx.arcTo(bx, by, bx + r, by, r)
+  ctx.closePath()
+  ctx.fillStyle = 'rgba(0,0,0,0.60)'
+  ctx.fill()
+
+  // Sparkle icon approximation (★)
+  ctx.fillStyle = '#c4b5fd' // violet-300
+  const iconSize = fontSize * 0.85
+  ctx.font = `${iconSize}px serif`
+  ctx.fillText('✦', bx + paddingX, by + paddingY + fontSize * 0.82)
+
+  // Label
+  ctx.fillStyle = '#ffffff'
+  ctx.font = `600 ${fontSize}px Inter, system-ui, sans-serif`
+  ctx.fillText(text, bx + paddingX + iconSize + 5, by + paddingY + fontSize * 0.82)
+  ctx.restore()
+}
+
 // Toolbar actions
 async function exportAndDownload() {
-  const { downloadImage } = useVisualizer()
-  await downloadImage()
+  const exportCanvas = document.createElement('canvas')
+  const exportCtx = exportCanvas.getContext('2d')
+  if (!exportCtx) return
+
+  if (generatedImage.value) {
+    // Bake the AI-generated image onto a fresh canvas
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.src = generatedImage.value
+    await new Promise<void>(resolve => { img.onload = () => resolve() })
+    exportCanvas.width = img.naturalWidth
+    exportCanvas.height = img.naturalHeight
+    exportCtx.drawImage(img, 0, 0)
+  } else if (canvasRef.value) {
+    exportCanvas.width = canvasRef.value.width
+    exportCanvas.height = canvasRef.value.height
+    exportCtx.drawImage(canvasRef.value, 0, 0)
+  } else {
+    return
+  }
+
+  drawWatermark(exportCtx, exportCanvas)
+
+  const link = document.createElement('a')
+  link.download = 'visualisa-result.png'
+  link.href = exportCanvas.toDataURL('image/png')
+  link.click()
 }
 
 async function handleGenerate() {

@@ -3,7 +3,7 @@ import type { Product } from '~/types'
 
 const visualizerStore = useVisualizerStore()
 const uiStore = useUiStore()
-const { session, selectedSurfaceId, bom, generatedImage } = storeToRefs(visualizerStore)
+const { session, selectedSurfaceId, bom, generatedImage, isGenerating } = storeToRefs(visualizerStore)
 const { visualizerSidebarTab: activeTab } = storeToRefs(uiStore)
 
 const { data: products } = await useAsyncData('viz-products', () =>
@@ -30,9 +30,12 @@ const filteredProducts = computed(() => {
 })
 
 const selectedProductId = ref<string | null>(null)
+// Track if we just selected a furniture product (to show AI CTA)
+const furnitureJustSelected = ref(false)
 
-function handleSelectProduct(product: Product) {
+async function handleSelectProduct(product: Product) {
   selectedProductId.value = product.id
+  furnitureJustSelected.value = false
   // Auto-add surface if none selected
   if (!selectedSurfaceId.value && session.value) {
     const typeMap: Record<string, 'floor' | 'wall' | 'ceiling'> = {
@@ -44,8 +47,22 @@ function handleSelectProduct(product: Product) {
   }
   if (selectedSurfaceId.value) {
     visualizerStore.applyProduct(selectedSurfaceId.value, product)
+    if (product.category === 'furniture') {
+      furnitureJustSelected.value = true
+    }
   } else {
     uiStore.addToast({ type: 'info', title: 'Selecciona una superficie', message: 'Elige piso, pared o techo primero.' })
+  }
+}
+
+async function generateFurnitureWithAI() {
+  furnitureJustSelected.value = false
+  try {
+    await visualizerStore.generateWithAI()
+    uiStore.visualizerSidebarTab = 'analysis'
+  } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : 'Error al generar imagen'
+    uiStore.addToast({ type: 'error', title: 'Error de generación', message: msg })
   }
 }
 
@@ -101,6 +118,26 @@ const { formatPrice } = useFormatPrice()
 
     <!-- Products tab -->
     <template v-if="activeTab === 'products'">
+      <!-- Furniture AI CTA banner: shown after selecting a furniture product -->
+      <Transition name="slide-down">
+        <div v-if="furnitureJustSelected && !isGenerating"
+          class="mx-4 mt-3 p-3 bg-violet-50 border border-violet-200 rounded-xl flex flex-col gap-2">
+          <div class="flex items-start gap-2">
+            <Icon name="lucide:sparkles" class="w-4 h-4 text-violet-500 mt-0.5 flex-shrink-0" />
+            <p class="text-xs text-violet-800 font-medium leading-snug">
+              El mueble aparece en el lienzo. Haz clic en
+              <strong>Generar con IA</strong> para ver el reemplazo fotorrealista en tu habitación.
+            </p>
+          </div>
+          <button
+            class="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white text-sm font-semibold py-2 rounded-lg shadow hover:opacity-90 transition-opacity"
+            @click="generateFurnitureWithAI">
+            <Icon name="lucide:sparkles" class="w-4 h-4" />
+            Generar con IA ahora
+          </button>
+        </div>
+      </Transition>
+
       <div class="flex-1 overflow-y-auto overscroll-contain scrollbar-hide p-4 space-y-4">
         <template v-if="filteredProducts.length">
           <div v-for="product in filteredProducts" :key="product.id" :class="[
@@ -109,8 +146,9 @@ const { formatPrice } = useFormatPrice()
           ]" @click="handleSelectProduct(product)">
             <!-- Thumbnail -->
             <div class="relative w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 bg-gray-100">
-              <img :src="product.images.texture || product.images.thumbnail" :alt="product.nameEs || product.name"
-                class="w-full h-full object-cover" />
+              <img
+                :src="product.category === 'furniture' ? (product.images.thumbnail || product.images.full) : (product.images.texture || product.images.thumbnail)"
+                :alt="product.nameEs || product.name" class="w-full h-full object-cover" />
               <div v-if="selectedProductId === product.id"
                 class="absolute inset-0 bg-primary/20 flex items-center justify-center backdrop-blur-[1px]">
                 <div class="w-6 h-6 bg-primary rounded-full flex items-center justify-center shadow-glow">
@@ -143,3 +181,16 @@ const { formatPrice } = useFormatPrice()
 
   </div>
 </template>
+
+<style scoped>
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition: all 0.25s ease;
+}
+
+.slide-down-enter-from,
+.slide-down-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+</style>

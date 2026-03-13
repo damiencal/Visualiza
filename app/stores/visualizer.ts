@@ -71,6 +71,12 @@ export const useVisualizerStore = defineStore("visualizer", () => {
   const sliderPosition = ref(50);
   const generatedImage = ref<string | null>(null);
   const isGenerating = ref(false);
+  // Stores the current canvas snapshot so AI generation always has the latest rendered state
+  const currentCanvasDataUrl = ref<string | null>(null);
+
+  function setCurrentCanvas(dataUrl: string | null) {
+    currentCanvasDataUrl.value = dataUrl;
+  }
 
   // BoM state
   const roomDimensions = ref<RoomDimensions>({
@@ -188,13 +194,15 @@ export const useVisualizerStore = defineStore("visualizer", () => {
     const existingIndex = session.value.layers.findIndex(
       (l) => l.surfaceId === surfaceId,
     );
+    // Furniture uses source-over (overlay the product image); surfaces use multiply (texture blend)
+    const isFurniture = product.category === "furniture";
     const layer: VisualizerLayer = {
       id: crypto.randomUUID(),
       surfaceId,
       productId: product.id,
       product,
-      opacity,
-      blendMode: "multiply",
+      opacity: isFurniture ? 0.92 : opacity,
+      blendMode: isFurniture ? "source-over" : "multiply",
       transform: { scale: 1, rotation: 0, offsetX: 0, offsetY: 0 },
     };
     if (existingIndex >= 0) {
@@ -270,6 +278,12 @@ export const useVisualizerStore = defineStore("visualizer", () => {
         category: l.product.category,
         colors: l.product.colors,
       }));
+      // Use the explicitly passed base64, otherwise fall back to the stored canvas snapshot
+      const imageData =
+        base64Image ??
+        (currentCanvasDataUrl.value
+          ? currentCanvasDataUrl.value.split(",")[1]
+          : undefined);
       const result = await $fetch<{ imageDataUrl: string }>(
         "/api/visualizer/generate",
         {
@@ -278,7 +292,7 @@ export const useVisualizerStore = defineStore("visualizer", () => {
             roomType: session.value.roomType,
             products,
             style,
-            base64Image,
+            base64Image: imageData,
           },
         },
       );
@@ -350,6 +364,8 @@ export const useVisualizerStore = defineStore("visualizer", () => {
     bomTotalUSD,
     aiAnalysis,
     isAnalyzing,
+    currentCanvasDataUrl,
+    setCurrentCanvas,
     createSession,
     selectSurface,
     addSurface,

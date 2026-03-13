@@ -31,17 +31,63 @@ function buildPrompt(body: GenerateBody): string {
 
   const materialsList =
     productDescriptions.length > 0
-      ? `featuring ${productDescriptions.join(", ")}`
-      : "with modern finishes";
+      ? productDescriptions.join(", ")
+      : "modern finishes";
 
   const style = body.style ?? "modern Caribbean";
 
+  const furnitureProducts = body.products.filter(
+    (p) => p.category === "furniture",
+  );
+  const surfaceProducts = body.products.filter(
+    (p) => p.category !== "furniture",
+  );
+
   if (body.base64Image && productDescriptions.length > 0) {
-    return `This is a room interior of a ${room}. I have roughly pasted new materials and products onto specific areas (${materialsList}). Please refine this image to make the new elements look completely photorealistic and naturally blended into the room. Ensure the lighting, shadows, reflections, and perspective of the new elements perfectly match the surrounding environment, keeping the underlying shape intact. Do not change the rest of the room.`;
+    const parts: string[] = [];
+
+    if (furnitureProducts.length > 0) {
+      const furnitureList = furnitureProducts
+        .map((p) => {
+          const colorHint = p.colors.length
+            ? ` in ${p.colors.slice(0, 2).join(" and ")}`
+            : "";
+          return `${p.name}${colorHint}`;
+        })
+        .join(", ");
+      parts.push(
+        `Replace the existing furniture in this ${room} with the following new pieces: ${furnitureList}. ` +
+          `The new furniture has been roughly placed in the scene. Integrate it photorealistically — ` +
+          `match the room's lighting direction, cast natural shadows, adjust perspective and scale so the ` +
+          `furniture sits convincingly on the floor. Remove the original furniture that is being replaced.`,
+      );
+    }
+
+    if (surfaceProducts.length > 0) {
+      const surfaceList = surfaceProducts
+        .map((p) => {
+          const colorHint = p.colors.length
+            ? ` in ${p.colors.slice(0, 2).join(" and ")}`
+            : "";
+          return `${p.name}${colorHint} (${p.category})`;
+        })
+        .join(", ");
+      parts.push(
+        `Also apply these surface materials: ${surfaceList}. ` +
+          `Make them look completely photorealistic with correct lighting, reflections, and texture detail.`,
+      );
+    }
+
+    parts.push(
+      `Keep all other room elements — architecture, remaining furniture, windows, ceiling, ` +
+        `and background — completely unchanged. Output a single photorealistic interior photograph.`,
+    );
+
+    return parts.join(" ");
   }
 
   return (
-    `A beautiful, photorealistic interior design of a ${room} ${materialsList}. ` +
+    `A beautiful, photorealistic interior design of a ${room} featuring ${materialsList}. ` +
     `${style} style, warm natural lighting, high-end real estate photography, ` +
     `sharp details, 4K quality, no people.`
   );

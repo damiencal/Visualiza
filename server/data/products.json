@@ -22,8 +22,8 @@
     "unit": "unidad",
     "sku": "IKEA-KAL-001",
     "images": {
-      "thumbnail": "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=300&auto=format&fit=crop",
-      "full": "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&auto=format&fit=crop",
+      "thumbnail": "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=300&auto=format&fit=crop",
+      "full": "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=800&auto=format&fit=crop",
       "texture": "https://placehold.co/512x512/E8E0D8/B5A99A?text=Wood+Texture",
       "textureScale": 0.5
     },
@@ -37,8 +37,8 @@
     "rating": 4.8,
     "reviewCount": 234,
     "tags": ["estantería", "muebles", "sala", "oficina"],
-    "visualizerCompatible": false,
-    "surfaceTypes": []
+    "visualizerCompatible": true,
+    "surfaceTypes": ["floor"]
   },
   {
     "id": "prod-002",
@@ -78,8 +78,8 @@
     "rating": 4.7,
     "reviewCount": 312,
     "tags": ["cama", "dormitorio", "muebles"],
-    "visualizerCompatible": false,
-    "surfaceTypes": []
+    "visualizerCompatible": true,
+    "surfaceTypes": ["floor"]
   },
   {
     "id": "prod-003",
@@ -726,8 +726,8 @@
     "rating": 4.7,
     "reviewCount": 167,
     "tags": ["cómoda", "dormitorio", "cajones", "madera"],
-    "visualizerCompatible": false,
-    "surfaceTypes": []
+    "visualizerCompatible": true,
+    "surfaceTypes": ["floor"]
   },
   {
     "id": "prod-019",
@@ -887,8 +887,8 @@
     "rating": 4.3,
     "reviewCount": 287,
     "tags": ["mesa", "sala", "centro", "sala de estar"],
-    "visualizerCompatible": false,
-    "surfaceTypes": []
+    "visualizerCompatible": true,
+    "surfaceTypes": ["floor"]
   },
   {
     "id": "prod-023",
@@ -1008,8 +1008,8 @@
     "rating": 4.9,
     "reviewCount": 234,
     "tags": ["ropa cama", "lino", "dormitorio", "beige", "natural"],
-    "visualizerCompatible": false,
-    "surfaceTypes": []
+    "visualizerCompatible": true,
+    "surfaceTypes": ["floor"]
   },
   {
     "id": "prod-026",
@@ -1075,8 +1075,8 @@
     "unit": "set",
     "sku": "HG-SOF-027",
     "images": {
-      "thumbnail": "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=300&auto=format&fit=crop",
-      "full": "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&auto=format&fit=crop",
+      "thumbnail": "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=300&auto=format&fit=crop",
+      "full": "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=800&auto=format&fit=crop",
       "texture": "https://placehold.co/512x512/5A5A6A/4A4A5A?text=Fabric",
       "textureScale": 0.5
     },
@@ -1091,8 +1091,8 @@
     "rating": 4.7,
     "reviewCount": 56,
     "tags": ["sofá", "seccional", "sala", "gris", "grande"],
-    "visualizerCompatible": false,
-    "surfaceTypes": []
+    "visualizerCompatible": true,
+    "surfaceTypes": ["floor"]
   },
   {
     "id": "prod-028",
@@ -1449,8 +1449,8 @@
     "rating": 4.6,
     "reviewCount": 445,
     "tags": ["librería", "libros", "estante", "sala", "oficina"],
-    "visualizerCompatible": false,
-    "surfaceTypes": []
+    "visualizerCompatible": true,
+    "surfaceTypes": ["floor"]
   },
   {
     "id": "prod-037",
@@ -1653,8 +1653,8 @@
     "rating": 4.6,
     "reviewCount": 312,
     "tags": ["sofá", "sala", "muebles", "tapizado", "clásico"],
-    "visualizerCompatible": false,
-    "surfaceTypes": []
+    "visualizerCompatible": true,
+    "surfaceTypes": ["floor"]
   },
   {
     "id": "prod-042",
