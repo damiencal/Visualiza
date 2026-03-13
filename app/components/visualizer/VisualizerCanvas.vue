@@ -286,7 +286,7 @@ async function handleGenerate() {
       base64 = canvasRef.value.toDataURL('image/jpeg', 0.8).split(',')[1];
     }
     await visualizerStore.generateWithAI(undefined, base64)
-    uiStore.visualizerSidebarTab = 'analysis'
+    uiStore.visualizerSidebarTab = 'bom'
   }
   catch (e: unknown) {
     const msg = e instanceof Error ? e.message : 'Error al generar imagen'

@@ -59,7 +59,7 @@ async function generateFurnitureWithAI() {
   furnitureJustSelected.value = false
   try {
     await visualizerStore.generateWithAI()
-    uiStore.visualizerSidebarTab = 'analysis'
+    uiStore.visualizerSidebarTab = 'bom'
   } catch (e: unknown) {
     const msg = e instanceof Error ? e.message : 'Error al generar imagen'
     uiStore.addToast({ type: 'error', title: 'Error de generación', message: msg })
