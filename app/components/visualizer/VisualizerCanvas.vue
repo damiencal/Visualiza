@@ -69,8 +69,21 @@ async function drawCanvas() {
       ctx.globalCompositeOperation = 'source-over'
       ctx.drawImage(furnitureImg, dx, dy, dw, dh)
       ctx.restore()
+    } else if (layer.product.category === 'paint') {
+      // Paint: solid color overlay using 'color' blend mode.
+      // 'color' keeps the room's luminance (shadows/highlights stay natural)
+      // and shifts the hue/saturation to the paint color — accurate wall tint.
+      const texUrl = layer.product.images?.texture ?? ''
+      const hexMatch = texUrl.match(/placehold\.co\/\d+x\d+\/([A-Fa-f0-9]{6})/i)
+      const paintColor = hexMatch ? `#${hexMatch[1]}` : '#888888'
+      ctx.save()
+      ctx.globalAlpha = layer.opacity ?? 0.55
+      ctx.globalCompositeOperation = 'color'
+      ctx.fillStyle = paintColor
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+      ctx.restore()
     } else {
-      // Surface materials (flooring, paint, tile, wallpaper): tile texture with blend
+      // Surface materials (flooring, tile, wallpaper): tile texture with blend
       if (!layer.product.images?.texture) continue
       const texImg = new Image()
       texImg.crossOrigin = 'anonymous'
@@ -182,6 +195,11 @@ async function drawBeforeCanvas() {
 
 watch(() => session.value?.roomImage, () => {
   if (session.value?.roomImage) drawBeforeCanvas()
+})
+
+// Re-draw the before canvas whenever it mounts (i.e. when showBeforeAfter is toggled on)
+watch(beforeCanvasRef, (canvas) => {
+  if (canvas && session.value?.roomImage) drawBeforeCanvas()
 })
 
 // Watermark drawn onto canvas context
@@ -297,13 +315,17 @@ defineExpose({ canvasRef })
     <!-- Before / After mode -->
     <template v-if="showBeforeAfter && session?.roomImage">
       <div class="relative select-none w-full h-full" style="touch-action: none;">
-        <!-- After (full) -->
-        <canvas ref="canvasRef" class="w-full h-full object-contain block" />
-        <!-- Before clip -->
+        <!-- After (right side): canvas always kept in DOM for drawing operations.
+             Hidden behind the AI result image when one exists. -->
+        <canvas ref="canvasRef" class="w-full h-full object-contain block" :class="{ invisible: !!generatedImage }" />
+        <!-- When AI has generated a result, use it as the "after" view -->
+        <img v-if="generatedImage" :src="generatedImage" class="absolute inset-0 w-full h-full object-contain block"
+          alt="Después" />
+        <!-- Before (left side): original uploaded photo, clipped to show only left of slider -->
         <div class="absolute inset-0 overflow-hidden" :style="{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }">
           <canvas ref="beforeCanvasRef" class="w-full h-full object-contain block" />
         </div>
-        <!-- Divider -->
+        <!-- Divider handle -->
         <VisualizerBeforeAfterSlider />
       </div>
     </template>

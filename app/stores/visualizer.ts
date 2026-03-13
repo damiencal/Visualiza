@@ -196,13 +196,14 @@ export const useVisualizerStore = defineStore("visualizer", () => {
     );
     // Furniture uses source-over (overlay the product image); surfaces use multiply (texture blend)
     const isFurniture = product.category === "furniture";
+    const isPaint = product.category === "paint";
     const layer: VisualizerLayer = {
       id: crypto.randomUUID(),
       surfaceId,
       productId: product.id,
       product,
-      opacity: isFurniture ? 0.92 : opacity,
-      blendMode: isFurniture ? "source-over" : "multiply",
+      opacity: isFurniture ? 0.92 : isPaint ? 0.55 : opacity,
+      blendMode: isFurniture ? "source-over" : isPaint ? "color" : "multiply",
       transform: { scale: 1, rotation: 0, offsetX: 0, offsetY: 0 },
     };
     if (existingIndex >= 0) {
