@@ -45,6 +45,10 @@ export default defineNuxtConfig({
         { name: "msapplication-TileColor", content: "#F43F5E" },
         { name: "msapplication-config", content: "/browserconfig.xml" },
         {
+          name: "google-site-verification",
+          content: "X_3rD9rN3nC2L8vSATaMjbn5-kDppMuubkfCwIUNoWs",
+        },
+        {
           name: "viewport",
           content: "width=device-width, initial-scale=1, viewport-fit=cover",
         },
